@@ -1,0 +1,22 @@
+﻿@{
+    var group = (UserManagement.Models.Group)ViewBag.Group;
+    var users = (List<UserManagement.Models.User>)ViewBag.AllUsers;
+    var selectedIds = (List<int>)ViewBag.SelectedUserIds;
+}
+
+<h2>Assign Users to Group: @group.Name</h2>
+
+<form asp-action="AssignUsers" method="post">
+    <input type="hidden" name="groupId" value="@group.Id" />
+
+    @foreach (var user in users)
+    {
+        <div>
+            <input type="checkbox" name="userIds" value="@user.Id"
+            @(selectedIds.Contains(user.Id) ? "checked" : "") />
+            @user.FirstName @user.LastName
+        </div>
+    }
+
+    <button type="submit">Save</button>
+</form>

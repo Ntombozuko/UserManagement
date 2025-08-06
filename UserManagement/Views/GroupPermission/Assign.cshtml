@@ -1,0 +1,22 @@
+﻿@{
+    var group = (UserManagement.Models.Group)ViewBag.Group;
+    var permissions = (List<UserManagement.Models.Permission>)ViewBag.Permissions;
+    var selectedIds = (List<int>)ViewBag.SelectedPermissionIds;
+}
+
+<h2>Assign Permissions to Group: @group.Name</h2>
+
+<form asp-action="Assign" method="post">
+    <input type="hidden" name="groupId" value="@group.Id" />
+
+    @foreach (var perm in permissions)
+    {
+        <div>
+            <input type="checkbox" name="permissionIds" value="@perm.Id"
+            @(selectedIds.Contains(perm.Id) ? "checked" : "") />
+            @perm.Name
+        </div>
+    }
+
+    <button type="submit">Save</button>
+</form>

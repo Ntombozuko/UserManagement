@@ -1,0 +1,27 @@
+﻿@model List<UserManagement.ViewModel.UserViewModel>
+
+<h2>All Users</h2>
+
+<a asp-action="Create">+ Create New User</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Full Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@($"{user.FirstName} {user.LastName}")</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@user.Id">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@user.Id">Delete</a>
+                    <a asp-controller="UserGroup" asp-action="Assign" asp-route-userId="@user.Id">Assign Groups</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

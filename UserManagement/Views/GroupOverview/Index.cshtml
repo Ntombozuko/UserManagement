@@ -1,0 +1,47 @@
+﻿@model List<UserManagement.Models.Group>
+
+<h2 class="mb-4">Groups and Memberships</h2>
+
+@foreach (var group in Model)
+{
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <span><strong>@group.Name</strong></span>
+            <div>
+                <a class="btn btn-sm btn-outline-primary" asp-controller="GroupPermission" asp-action="Assign" asp-route-groupId="@group.Id">Assign Permissions</a>
+                <a class="btn btn-sm btn-outline-secondary" asp-controller="UserGroup" asp-action="AssignUsers" asp-route-groupId="@group.Id">Assign Users</a>
+            </div>
+        </div>
+        <div class="card-body">
+            <h6>Users</h6>
+            @if (group.UserGroups.Any())
+            {
+                <ul class="list-unstyled">
+                    @foreach (var ug in group.UserGroups)
+                    {
+                        <li>@ug.User.FirstName @ug.User.LastName</li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="text-muted">No users assigned</p>
+            }
+
+            <h6>Permissions</h6>
+            @if (group.GroupPermissions.Any())
+            {
+                <ul class="list-unstyled">
+                    @foreach (var gp in group.GroupPermissions)
+                    {
+                        <li>@gp.Permission.Name</li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="text-muted">No permissions assigned</p>
+            }
+        </div>
+    </div>
+}
